@@ -1,4 +1,4 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
+import { SlashCommandBuilder, SlashCommandSubcommandBuilder } from '@discordjs/builders';
 
 export const data = new SlashCommandBuilder()
   .setName('dinner')
@@ -8,7 +8,7 @@ export const data = new SlashCommandBuilder()
       .setName('add')
       .setDescription('Info about a user')
       .addStringOption((option) => option.setName('name').setDescription('Name of the meal').setRequired(true))
-      // .addStringOption((option) => option.setName('recipeUrl').setDescription('Link to the recipe'))
+      .addStringOption((option) => option.setName('recipe-url').setDescription('Link to the recipe').setRequired(false))
   )
   .addSubcommand((subcommand) =>
     subcommand

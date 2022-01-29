@@ -10,7 +10,7 @@ const file = join(__dirname, 'dinnerdb.json')
 
 type Meal = {
   name: string
-  recipe?: string
+  recipeUrl?: string
 }
 type Data = {
   meals: Meal[]
@@ -37,7 +37,13 @@ client.on('interactionCreate', async (interaction) => {
         return await interaction.reply(`Here's the menu :pinched_fingers:\n${mealList}`);
       } else if (options.getSubcommand() === 'add') {
         const name = options.getString('name');
-        meals.push({ name })
+        const recipeUrl = options.getString('recipe-url');
+
+        if (recipeUrl && !recipeUrl.match(/[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/)) {
+          return await interaction.reply(`Sorry, the recipe URL (${recipeUrl}) looks a bit butchered`);
+        }
+
+        meals.push({ name, recipeUrl })
         await db.write()
         return await interaction.reply(`Added ${name} to the menu!`);
       }
