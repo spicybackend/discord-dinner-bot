@@ -1,0 +1,9 @@
+export default {
+	// bot id and token
+	clientId: "bot-client-id",
+	token: "bot-token",
+	// id of instance being installed to
+	guildId: "discord-instance-id",
+	// id of the channel to post scheduled meals to
+	channelId: "discord-channel-id",
+}

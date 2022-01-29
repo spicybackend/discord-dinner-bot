@@ -1,0 +1,5 @@
+node_modules
+.env
+config.ts
+*.log
+src/dinnerdb.json

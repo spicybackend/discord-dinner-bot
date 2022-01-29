@@ -1,0 +1,29 @@
+{
+  "name": "dinner-time-bot",
+  "main": "index.js",
+  "type": "module",
+  "exports": "./index.js",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
+  },
+  "scripts": {
+    "deploy:commands": "node --loader ts-node/esm --experimental-specifier-resolution=node ./src/deploy-commands.ts",
+    "bot": "node --loader ts-node/esm --experimental-specifier-resolution=node ./src/index.ts",
+    "bot:schedule": "node --loader ts-node/esm --experimental-specifier-resolution=node ./src/jobs/schedule-weekly-meals.ts"
+  },
+  "dependencies": {
+    "@discordjs/builders": "^0.12.0",
+    "@discordjs/rest": "^0.3.0",
+    "awesome-typescript-loader": "^5.2.1",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "^13.6.0",
+    "lowdb": "^3.0.0",
+    "source-map-loader": "^3.0.1",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@magic-works/commonjs-import.meta": "^1.0.1",
+    "ttypescript": "^1.5.13"
+  }
+}
