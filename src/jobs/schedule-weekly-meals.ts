@@ -1,4 +1,4 @@
-import { CategoryChannel, Client, Intents, MessageActionRow, MessageButton, StageChannel, TextChannel } from 'discord.js';
+import { Client, Intents, MessageActionRow, MessageButton, TextChannel } from 'discord.js';
 import config from '../../config';
 import { join, dirname } from 'path'
 import { Low, JSONFile } from 'lowdb'
@@ -36,7 +36,7 @@ client.login(config.token).then(async () => {
         .setEmoji('♻️')
         .setCustomId('redraw-meals')
         .setLabel('Redraw meals')
-        .setStyle('PRIMARY'),
+        .setStyle('SECONDARY'),
     );
 
   await channel.send({
