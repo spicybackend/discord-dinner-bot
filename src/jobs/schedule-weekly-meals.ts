@@ -1,35 +1,17 @@
 import { Client, Intents, MessageActionRow, MessageButton, TextChannel } from 'discord.js';
 import config from '../../config';
-import { join, dirname } from 'path'
-import { Low, JSONFile } from 'lowdb'
-import { fileURLToPath } from 'url'
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const file = join(__dirname, '../dinnerdb.json')
-
-type Meal = {
-  name: string
-  recipe?: string
-}
-type Data = {
-  meals: Meal[]
-}
-const adapter = new JSONFile<Data>(file)
-const db = new Low<Data>(adapter)
+import { database } from '../database-schema'
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 client.login(config.token).then(async () => {
   console.log("Prepping the meal list for the week");
-
   const channel = await client.channels.fetch(config.channelId)
   if (!(channel instanceof TextChannel)) throw 'bad channel'
 
-  await db.read()
-  db.data ||= { meals: [] }
+  const db = await database()
   const { meals } = db.data
 
-  const mealList = meals.map((meal) => ` • ${meal.name}`).join('\n')
   const row = new MessageActionRow()
     .addComponents(
       new MessageButton()
@@ -39,8 +21,16 @@ client.login(config.token).then(async () => {
         .setStyle('SECONDARY'),
     );
 
+    const mealEmbeds = meals.map((meal) => {
+      return {
+        title: meal.name,
+        url: meal.recipeUrl ? meal.recipeUrl : undefined,
+      }
+    })
+
   await channel.send({
-    content: `I've prepped a list of meals for this week :cook: You'll be having:\n${mealList}\nBon Appétit!`,
+    content: `I've prepped a list of meals for this week :cook:`,
+    embeds: mealEmbeds,
     components: [row]
   });
 
